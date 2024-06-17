@@ -23,12 +23,12 @@ class Usuario(models.Model):
             verbose_name_plural = 'Usuarios'
 
 class Pago(models.Model):
-    idPago = models.IntegerField(auto_created=True,verbose_name='Id Pago')
+    idPago = models.IntegerField(auto_created=True,verbose_name='Id Pago',primary_key=True)
     correo = models.ForeignKey(Usuario, verbose_name="Correo Usuario", on_delete=models.RESTRICT)
-    monto = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='Total Carrito')
+    monto = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='Total Pago')
 
     def __str__(self):
-         texto = "Total: {1} Correo: {0}"
+         texto = "Total: {0} Correo: {1}"
          return texto.format(self.monto,self.correo)
     
     class Meta:
@@ -36,4 +36,17 @@ class Pago(models.Model):
         verbose_name = 'Pago'
         verbose_name_plural = 'Pagos'
      
+class Carrito(models.Model):
+     idCarrito = models.IntegerField(auto_created=True,verbose_name="Id Carrito",primary_key=True)
+     correo = models.ForeignKey(Usuario,on_delete=models.RESTRICT,verbose_name="Correo Usuario")
+     total = models.DecimalField(max_digits=5,decimal_places=2,verbose_name="Total Carrito")
+
+     def __str__(self):
+          texto = "Total: {0} Correo:{1}"
+          return texto.format(self.monto,self.correo)
+     
+     class Meta:
+        db_table = 'Carro'
+        verbose_name = 'Carro'
+        verbose_name_plural = 'Carros'
 
