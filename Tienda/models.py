@@ -13,17 +13,27 @@ class Usuario(models.Model):
         imagen = models.ImageField(upload_to='usuarios/',verbose_name="Fotografia",blank=True,null=True)
         tipo = models.CharField(max_length=1,verbose_name='Tipo De Usuario',blank=True,null=True)
 
-
-
         def __str__(self):
             texto = "{0}"
             return texto.format(self.correo)
     
-
         class Meta:
             db_table = 'Usuario'
             verbose_name = 'Usuario'
             verbose_name_plural = 'Usuarios'
 
+class Pago(models.Model):
+    idPago = models.IntegerField(auto_created=True,verbose_name='Id Pago')
+    correo = models.ForeignKey(Usuario, verbose_name="Correo Usuario", on_delete=models.RESTRICT)
+    monto = models.DecimalField(max_digits=5,decimal_places=2,verbose_name='Total Carrito')
 
+    def __str__(self):
+         texto = "Total: {1} Correo: {0}"
+         return texto.format(self.monto,self.correo)
+    
+    class Meta:
+        db_table = 'Pago'
+        verbose_name = 'Pago'
+        verbose_name_plural = 'Pagos'
+     
 
